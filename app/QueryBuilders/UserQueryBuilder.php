@@ -3,6 +3,7 @@
 namespace App\QueryBuilders;
 
 use App\Models\User;
+use App\Models\Crew;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,10 +23,19 @@ class UserQueryBuilder extends QueryBuilder
 
     /**
      * @param int $crewId
-     * @return Collection
+     * @return Builder
      */
-    function getCollectionByCrewId(int $crewId): Collection
+    public function getCollectionByCrewId(int $crewId): Collection
     {
-        return $this->model->where('crew_id', $crewId);
+        return $this->model->where('crew_id', $crewId)->get();
+    }
+
+    /**
+     * @param int $id
+     * @return User
+     */
+    public function getById(int $id): User
+    {
+        return $this->model->find($id);
     }
 }

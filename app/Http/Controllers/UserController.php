@@ -9,7 +9,6 @@ use App\QueryBuilders\RoleQueryBuilder;
 use App\QueryBuilders\UserQueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -34,8 +33,20 @@ class UserController extends Controller
         $user = User::create($request->validated());
 
         if($user){
-            return redirect()->route('index')->with('success', 'Данные сохранены');
+            return redirect()->route('crews.index')->with('success', 'Данные сохранены');
         }
         return \back()->with('error', 'Ошибка записи данных');
+    }
+
+    /**
+     * @param UserQueryBuilder $userQueryBuilder
+     * @param int              $userId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View|\Illuminate\Foundation\Application
+     */
+    public function show(UserQueryBuilder $userQueryBuilder, int $userId)
+    {
+        return \view('users.show', [
+            'user' => $userQueryBuilder->getById($userId),
+        ]);
     }
 }

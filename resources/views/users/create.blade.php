@@ -15,23 +15,23 @@
                 <x-alert type="danger" :message="$error"></x-alert>
             @endforeach
         @endif
-        <form method="post" action="{{url(\App\Classes\Helpers::getHost() . 'users')}}">
+        <form method="post" action="{{url(\App\Classes\Helpers::getHost() . '/users')}}">
             @csrf
             <div class="form-group mt-2">
                 <label for="role">Должность</label>
-                <select id="role" name="role[]" class="form-control @error('role') is-invalid @enderror">
+                <select id="role" name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                     <option value="0">->Выбрать<-</option>
                     @foreach($roles as $role)
-                        <option @if(old('role') === $role) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
+                        <option @if(old('role_id') === $role) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group mt-2">
                 <label for="crew">Бригада</label>
-                <select id="crew" name="crew[]" class="form-control @error('crew') is-invalid @enderror">
+                <select id="crew" name="crew_id" class="form-control @error('crew_id') is-invalid @enderror">
                     <option value="0">->Выбрать<-</option>
                     @foreach($crews as $crew)
-                        <option @if(old('crew') === $crew) selected @endif value="{{ $crew->id }}">{{ $crew->name }}</option>
+                        <option @if(old('crew_id') === $crew) selected @endif value="{{ $crew->id }}">{{ $crew->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -40,16 +40,16 @@
                 <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class="form-control @error('last_name') is-invalid @enderror">
             </div>
             <div class="form-group mt-2">
-                <label for="first_name">Имя</label>
-                <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" class="form-control @error('first_name') is-invalid @enderror">
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
             </div>
             <div class="form-group mt-2">
-                <label for="surname">Отчество</label>
-                <input type="text" id="surname" name="surname" value="{{ old('surname') }}" class="form-control @error('surname') is-invalid @enderror">
+                <label for="second_name">Отчество</label>
+                <input type="text" id="second_name" name="second_name" value="{{ old('second_name') }}" class="form-control @error('second_name') is-invalid @enderror">
             </div>
            <div class="form-group mt-2">  {{-- todo доделать--}}
                 <label for="video">Видео-файл</label>
-                <input type="file" id="video" name="video" value="{{ old('video') }}" class="form-control @error('video') is-invalid @enderror">
+                <input type="file" id="video" name="video[]" value="{{ old('video') }}" class="form-control @error('video') is-invalid @enderror">
             </div>
             <button type="submit" class="btn btn-sm mt-3 btn-outline-secondary">Загрузить+</button>
         </form>

@@ -15,7 +15,7 @@
                 <x-alert type="danger" :message="$error"></x-alert>
             @endforeach
         @endif
-        <form method="post" action="{{url(\App\Classes\Helpers::getHost() . 'crews')}}">
+        <form method="post" action="{{url(\App\Classes\Helpers::getHost() . '/crews')}}">
             @csrf
             <div class="form-group mt-2">
                 <label for="name">Название</label>
