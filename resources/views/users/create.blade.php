@@ -15,7 +15,7 @@
                 <x-alert type="danger" :message="$error"></x-alert>
             @endforeach
         @endif
-        <form method="post" action="{{url(\App\Classes\Helpers::getHost() . '/users')}}">
+        <form method="post" action="{{url(\App\Classes\Helpers::getHost() . '/users')}}" enctype="multipart/form-data">
             @csrf
             <div class="form-group mt-2">
                 <label for="crew">Бригада*</label>
@@ -61,8 +61,8 @@
                 </div>
             </div>
            <div class="form-group mt-2">  {{-- todo доделать--}}
-                <label for="video">Видео-файл</label>
-                <input type="file" id="video" name="video" value="{{ old('video') }}" class="form-control @error('video') is-invalid @enderror">
+                <label for="file">json-файл*</label>
+                <input type="file" id="file" name="file" value="{{ old('file') }}" class="form-control @error('file') is-invalid @enderror">
             </div>
             <button type="submit" class="btn btn-sm mt-3 btn-outline-secondary">Загрузить+</button>
         </form>

@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Users\CreateRequest;
 use App\Models\User;
+use App\Models\Disturbance;
 use App\QueryBuilders\CrewQueryBuilder;
 use App\QueryBuilders\RoleQueryBuilder;
 use App\QueryBuilders\UserQueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use JsonStreamingParser\Listener\InMemoryListener;
+use JsonStreamingParser\Parser;
 
 class UserController extends Controller
 {
@@ -27,7 +30,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(CreateRequest &$request): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
         $validate = $request->validated();
 
@@ -42,6 +45,16 @@ class UserController extends Controller
         }
 
         if($user){
+            $listener = new InMemoryListener();
+            $pathToFile = $request->file('file')->getPathname();
+            $parser = new Parser(fopen($pathToFile, 'r'), $listener);
+            $parser->parse();
+            $result = $listener->getJson();
+
+            if ($result) {
+                Disturbance::createDistsByUserId($result, $user);
+            }
+
             return redirect()->route('crews.index')->with('success', 'Данные сохранены');
         }
         return \back()->with('error', 'Ошибка записи данных');

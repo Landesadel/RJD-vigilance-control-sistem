@@ -16,7 +16,7 @@
             <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('users.*')) active @endif mb-3" href="{{url(\App\Classes\Helpers::getHost() . '/users/create')}}">
                     <span data-feather="file-text" class="align-text-bottom"></span>
-                    Загрузить видео
+                     Внести данные
                 </a>
             </li>
         </ul>

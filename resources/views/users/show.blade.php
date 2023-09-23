@@ -28,7 +28,7 @@
                 <tr>
                     <th scope="col">#ID</th>
                     <th scope="col">Дата фиксации нарушения</th>
-                    <th scope="col">Время фиксации нарушения</th>
+                    <th scope="col">Примерное время фиксации нарушения</th>
                     <th scope="col">Минута на видео-записи</th>
                     <th scope="col">Тип нарушения</th>
                 </tr>
