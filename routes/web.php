@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('index');
 
-Route::resource('/users', UserController::class);
-Route::resource('/crews', CrewController::class);
+Route::resource('users', UserController::class);
+Route::resource('crews', CrewController::class);

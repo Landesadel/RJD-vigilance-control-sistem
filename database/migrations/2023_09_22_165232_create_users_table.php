@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('name');
             $table->string('second_name')->nullable();
-            $table->string('role');
             $table->timestamps();
         });
     }

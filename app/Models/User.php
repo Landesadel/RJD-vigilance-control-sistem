@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Model
 {
     use HasFactory;
 
@@ -39,5 +40,18 @@ class User extends Authenticatable
     public function crew(): BelongsTo
     {
         return $this->belongsTo(Crew::class, 'crew_id');
+    }
+
+    /**
+     * @param int $crewId
+     * @return Crew
+     */
+    public function getCrew(int $crewId): Crew
+    {
+        $user = User::with('crew')
+            ->where('crew_id', $crewId)
+            ->first();
+
+        return $user->crew;
     }
 }
