@@ -19,4 +19,24 @@ class RoleQueryBuilder extends QueryBuilder
     {
         return $this->model->get();
     }
+
+    /**
+     * @param string $name
+     * @return int
+     */
+    public function getRoleIdByName(string $name): int
+    {
+        $roleId = $this->model->where('name', $name)->pluck('id')->first();
+
+        if (!$roleId) {
+            $role = Role::create([
+                'name' => $name,
+                'created_at' => now(),
+            ]);
+
+            $roleId = $role->id;
+        }
+
+        return $roleId;
+    }
 }

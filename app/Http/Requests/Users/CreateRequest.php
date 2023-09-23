@@ -26,7 +26,10 @@ class CreateRequest extends FormRequest
             'name' => 'required|string',
             'second_name' => 'sometimes|string',
             'crew_id' => 'required|integer',
-            'role_id' => 'required|integer',
+            'role_id' => 'required|string',
+            'assistant_last_name' => 'nullable|string',
+            'assistant_name' => 'nullable|string',
+            'assistant_second_name' => 'nullable|string',
         ];
     }
 

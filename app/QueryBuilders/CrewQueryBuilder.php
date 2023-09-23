@@ -39,4 +39,10 @@ class CrewQueryBuilder extends QueryBuilder
             ->where('crew_id', $crewId)
             ->get();
     }
+
+//    public function getCrewDistsByCrewId(int $crewId): Collection
+//    {
+//        $users = $this->model->getAllUsersByCrewId($crewId);
+//
+//    }
 }
