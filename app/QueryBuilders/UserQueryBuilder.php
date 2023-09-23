@@ -4,8 +4,10 @@ namespace App\QueryBuilders;
 
 use App\Models\User;
 use App\Models\Crew;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class UserQueryBuilder extends QueryBuilder
 {
@@ -16,6 +18,9 @@ class UserQueryBuilder extends QueryBuilder
         $this->model = User::query();
     }
 
+    /**
+     * @return Collection
+     */
     function getCollection(): Collection
     {
         return $this->model->get();
@@ -23,7 +28,7 @@ class UserQueryBuilder extends QueryBuilder
 
     /**
      * @param int $crewId
-     * @return Builder
+     * @return Collection
      */
     public function getCollectionByCrewId(int $crewId): Collection
     {
@@ -31,11 +36,23 @@ class UserQueryBuilder extends QueryBuilder
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      * @return User
      */
-    public function getById(int $id): User
+    public function getById(int $userId): User
     {
-        return $this->model->find($id);
+        return $this->model->find($userId);
+    }
+
+    /**
+     * @param int $userId
+     * @param int $quantity
+     * @return Paginator
+     */
+    public function getUserDistsByUserId(int $userId, int $quantity = 50): Paginator
+    {
+        return DB::table('dists')
+            ->where('user_id', $userId)
+            ->simplePaginate($quantity);
     }
 }

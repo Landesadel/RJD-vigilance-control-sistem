@@ -53,7 +53,8 @@ class CrewController extends Controller
     {
         return \view('crews.show', [
             'crew' => $crewQueryBuilder->getById($crewId),
-            'userList' => $crewQueryBuilder->getAllUsersByCrewId($crewId)
+            'userList' => $crewQueryBuilder->getAllUsersByCrewId($crewId),
+//            'dists' => $crewQueryBuilder->getCrewDistsByCrewId($crewId),
         ]);
     }
 }

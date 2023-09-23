@@ -23,14 +23,23 @@ class UserController extends Controller
     public function create(CrewQueryBuilder $crewQueryBuilder, RoleQueryBuilder $roleQueryBuilder): View
     {
         return \view('users.create', [
-            'roles' => $roleQueryBuilder->getCollection(),
             'crews' => $crewQueryBuilder->getCollection(),
         ]);
     }
 
-    public function store(CreateRequest $request): RedirectResponse
+    public function store(CreateRequest &$request): RedirectResponse
     {
-        $user = User::create($request->validated());
+        $validate = $request->validated();
+
+        $validate['role_id'] = (new RoleQueryBuilder())->getRoleIdByName($request['role_id']);
+        $user = new User();
+
+        if(!empty($request['assistant_last_name'])) {
+             $user = $user->createWithAssistant($validate);
+        } else {
+            $user = $user->createUser($validate);
+
+        }
 
         if($user){
             return redirect()->route('crews.index')->with('success', 'Данные сохранены');
@@ -47,6 +56,7 @@ class UserController extends Controller
     {
         return \view('users.show', [
             'user' => $userQueryBuilder->getById($userId),
+            'distList' => $userQueryBuilder->getUserDistsByUserId($userId),
         ]);
     }
 }
