@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <div class="btn-toolbar mt-3 mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <a href="{{url(\App\Classes\Helpers::getHost() . '/crews')}}" class="btn btn-sm btn-outline-secondary">Назад</a>
+                <a href="{{url(\App\Classes\Helpers::getHost() . '/crews/' . ($user->crew)->id)}}" class="btn btn-sm btn-outline-secondary">Назад</a>
             </div>
         </div>
     </div>
