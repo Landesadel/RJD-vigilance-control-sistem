@@ -6,6 +6,7 @@ use App\Models\Crew;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CrewQueryBuilder extends QueryBuilder
 {
@@ -33,6 +34,10 @@ class CrewQueryBuilder extends QueryBuilder
         return $this->model->find($id);
     }
 
+    /**
+     * @param int $crewId
+     * @return Collection
+     */
     public function getAllUsersByCrewId(int $crewId): Collection
     {
         return User::query()
@@ -40,9 +45,35 @@ class CrewQueryBuilder extends QueryBuilder
             ->get();
     }
 
-//    public function getCrewDistsByCrewId(int $crewId): Collection
-//    {
-//        $users = $this->model->getAllUsersByCrewId($crewId);
-//
-//    }
+    /**
+     * @param int $crewId
+     * @return array
+     */
+    public function getCountDistsByCrewId(int $crewId): array
+    {
+        $resultData = [];
+
+        $resultData['phone_count'] = DB::table('crews')
+           ->join('users', 'crews.id', '=', 'users.crew_id')
+           ->join('dists', 'users.id', '=', 'dists.user_id')
+           ->where('crews.id', $crewId)
+           ->where('dists.type', 'phone')
+           ->count();
+
+        $resultData['distracted'] = DB::table('crews')
+            ->join('users', 'crews.id', '=', 'users.crew_id')
+            ->join('dists', 'users.id', '=', 'dists.user_id')
+            ->where('crews.id', $crewId)
+            ->where('dists.type', 'distracted')
+            ->count();
+
+        $resultData['empty_place'] = DB::table('crews')
+            ->join('users', 'crews.id', '=', 'users.crew_id')
+            ->join('dists', 'users.id', '=', 'dists.user_id')
+            ->where('crews.id', $crewId)
+            ->where('dists.type', 'empty_place')
+            ->count();
+
+       return $resultData;
+    }
 }

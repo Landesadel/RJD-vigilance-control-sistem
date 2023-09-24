@@ -30,6 +30,7 @@ class CreateRequest extends FormRequest
             'assistant_last_name' => 'nullable|string',
             'assistant_name' => 'nullable|string',
             'assistant_second_name' => 'nullable|string',
+            'file' => 'required|file',
         ];
     }
 

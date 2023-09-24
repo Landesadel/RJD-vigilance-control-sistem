@@ -58,10 +58,11 @@ class User extends Model
 
     /**
      * @param $params
-     * @return bool
+     * @return array|bool
      */
-    public function createWithAssistant($params): bool
+    public function createWithAssistant($params): array|bool
     {
+        $result = [];
         $assistantData = [
             'crew_id' => $params['crew_id'],
             'role_id' => (new RoleQueryBuilder())->getRoleIdByName('Помощник машиниста'),
@@ -80,24 +81,31 @@ class User extends Model
         $user = User::create($params);
 
         if ($user) {
+            $result[] = $user->id;
+
             $assistant = User::create($assistantData);
 
             if ($assistant) {
-                return true;
+                $result[] = $assistant->id;
+                return $result;
             }
         }
 
         return false;
     }
 
-    public function createUser($params): bool
+    /**
+     * @param $params
+     * @return array|bool
+     */
+    public function createUser($params): array|bool
     {
         $params['created_at'] = now();
 
         $user = User::create($params);
 
         if ($user) {
-            return true;
+            return [$user->id];
         }
 
         return false;

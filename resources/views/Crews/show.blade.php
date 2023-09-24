@@ -23,6 +23,24 @@
         </div>
         <div>
             <h3>Общая статистика нарушений бригады</h3>
+            <div class="flex-column">
+                <div class="d-flex justify-content-between">
+                    <h6>Отсутствие команды на месте:</h6>
+                    <p>{{ $dists['empty_place'] }}</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6>Смотрел в телефон:</h6>
+                    <p>{{ $dists['phone_count'] }}</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6>Рассеивание внимания:</h6>
+                    <p>{{ $dists['distracted'] }}</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h6>Общее количество нарушений: </h6>
+                    <h6>{{ array_sum($dists) }}</h6>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
